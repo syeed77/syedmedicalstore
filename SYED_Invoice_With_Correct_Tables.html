@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SYED MEDICAL STORE - Invoice Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 2rem; }
+    h1 { color: #28a745; text-align: center; }
+    .form-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+    .form-row input { flex: 1; padding: 8px; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #28a745; color: white; }
+    .totals { margin-top: 1rem; display: flex; gap: 2rem; }
+    .totals input { width: 100px; padding: 6px; }
+    button { margin-top: 1rem; padding: 10px 20px; background: #198754; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #146c43; }
+  </style>
+</head>
+<body>
+
+<h1>SYED MEDICAL STORE - Invoice Generator</h1>
+
+<div class="form-row">
+  <input type="text" id="buyer" placeholder="Customer Name" />
+  <input type="text" id="invoiceNo" placeholder="Invoice No" />
+  <input type="date" id="invoiceDate" />
+</div>
+
+<table id="items">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Qty</th>
+      <th>Rate</th>
+      <th>Tax %</th>
+      <th>Total</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="itemBody"></tbody>
+</table>
+<button onclick="addItem()">➕ Add Item</button>
+
+<div class="form-row">
+  <input type="text" id="bankName" placeholder="Bank Name" />
+  <input type="text" id="accountHolder" placeholder="Account Holder" />
+  <input type="text" id="accountNumber" placeholder="Account Number" />
+  <input type="text" id="ifsc" placeholder="IFSC Code" />
+</div>
+
+<div class="totals">
+  <label>Discount: <input type="number" id="discount" value="0"></label>
+  <label>Received: <input type="number" id="received" value="0"></label>
+</div>
+
+<button onclick="generatePDF()">📥 Download Invoice PDF</button>
+
+<div id="invoicePreview" style="display:none;"></div>
+
+<script>
+function addItem() {
+  const tbody = document.getElementById("itemBody");
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td><input type="text" class="item-name" /></td>
+    <td><input type="number" class="item-qty" value="1" /></td>
+    <td><input type="number" class="item-rate" value="0" /></td>
+    <td><input type="number" class="item-tax" value="0" /></td>
+    <td class="item-total">Rs. 0.00</td>
+    <td><button onclick="this.closest('tr').remove(); updateTotals();">❌</button></td>
+  `;
+  tbody.appendChild(row);
+  row.querySelectorAll("input").forEach(input => input.addEventListener("input", updateTotals));
+  updateTotals();
+}
+
+function updateTotals() {
+  const rows = document.querySelectorAll("#itemBody tr");
+  rows.forEach(row => {
+    const qty = parseFloat(row.querySelector(".item-qty").value) || 0;
+    const rate = parseFloat(row.querySelector(".item-rate").value) || 0;
+    const tax = parseFloat(row.querySelector(".item-tax").value) || 0;
+    const total = qty * rate * (1 + tax / 100);
+    row.querySelector(".item-total").innerText = "Rs. " + total.toFixed(2);
+  });
+}
+
+function generatePDF() {
+  const buyer = document.getElementById("buyer").value;
+  const invoiceNo = document.getElementById("invoiceNo").value;
+  const invoiceDate = document.getElementById("invoiceDate").value;
+  const discount = parseFloat(document.getElementById("discount").value) || 0;
+  const received = parseFloat(document.getElementById("received").value) || 0;
+  const bankName = document.getElementById("bankName").value;
+  const accountHolder = document.getElementById("accountHolder").value;
+  const accountNumber = document.getElementById("accountNumber").value;
+  const ifsc = document.getElementById("ifsc").value;
+
+  const rows = document.querySelectorAll("#itemBody tr");
+  let total = 0;
+  let itemsHTML = "";
+
+  rows.forEach((row, i) => {
+    const name = row.querySelector(".item-name").value;
+    const qty = parseFloat(row.querySelector(".item-qty").value) || 0;
+    const rate = parseFloat(row.querySelector(".item-rate").value) || 0;
+    const tax = parseFloat(row.querySelector(".item-tax").value) || 0;
+    const itemTotal = qty * rate * (1 + tax / 100);
+    total += itemTotal;
+
+    itemsHTML += `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${name}</td>
+        <td>${qty}</td>
+        <td>Rs. ${rate.toFixed(2)}</td>
+        <td>${tax}%</td>
+        <td>Rs. ${itemTotal.toFixed(2)}</td>
+      </tr>
+    `;
+  });
+
+  const due = total - discount - received;
+
+  const html = `
+    <div style="font-family:Arial; font-size:14px; padding:20px;">
+      <h2 style="text-align:center; color:#28a745;">SYED MEDICAL STORE</h2>
+      <table style="width:100%; margin-bottom:10px;">
+        <tr><td><strong>Invoice No:</strong> ${invoiceNo}</td><td><strong>Date:</strong> ${invoiceDate}</td></tr>
+        <tr><td colspan="2"><strong>Billed To:</strong> ${buyer}</td></tr>
+      </table>
+      <table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse:collapse;">
+        <thead style="background:#28a745; color:#fff;">
+          <tr><th>Sr</th><th>Item</th><th>Qty</th><th>Rate</th><th>Tax</th><th>Amount</th></tr>
+        </thead>
+        <tbody>${itemsHTML}</tbody>
+      </table>
+      <table style="width:100%; margin-top:10px;">
+        <tr><td><strong>Discount:</strong> Rs. ${discount.toFixed(2)}</td></tr>
+        <tr><td><strong>Total:</strong> Rs. ${total.toFixed(2)}</td></tr>
+        <tr><td><strong>Received:</strong> Rs. ${received.toFixed(2)}</td></tr>
+        <tr><td><strong>Due:</strong> Rs. ${due.toFixed(2)}</td></tr>
+        <tr><td><strong>Terms:</strong> No return deal. GST & delivery charges applicable. Pay due within 15 days.</td></tr>
+      </table>
+      <h4 style="margin-top:20px;">Bank Details</h4>
+      <table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse:collapse;">
+        <tr><td><strong>Bank Name:</strong></td><td>${bankName}</td></tr>
+        <tr><td><strong>Account Holder:</strong></td><td>${accountHolder}</td></tr>
+        <tr><td><strong>Account Number:</strong></td><td>${accountNumber}</td></tr>
+        <tr><td><strong>IFSC:</strong></td><td>${ifsc}</td></tr>
+      </table>
+      <p style="text-align:right; margin-top:30px;">Authorized Signatory</p>
+    </div>
+  `;
+
+  const preview = document.getElementById("invoicePreview");
+  preview.innerHTML = html;
+  preview.style.display = "block";
+  html2pdf().set({
+    margin: 10,
+    filename: "SYED_INVOICE.pdf",
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+  }).from(preview).save();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  addItem();
+});
+</script>
+
+</body>
+</html>
