@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>📋 Medicine Tracker - SYED MEDICAL STORE</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f8fdf9; padding: 20px; color: #212529; }
+    h1 { text-align: center; color: #198754; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 8px; border: 1px solid #ccc; text-align: center; }
+    th { background: #198754; color: white; }
+    button { margin: 10px 5px; padding: 8px 12px; border: none; border-radius: 6px; background: #198754; color: white; cursor: pointer; }
+    button:hover { background: #157347; }
+    .delete { background: #dc3545; } .delete:hover { background: #bb2d3b; }
+  </style>
+</head>
+<body>
+
+<h1>📋 Medicine Tracker</h1>
+<button onclick="addRow()">➕ Add Entry</button>
+<button onclick="exportStyledExcel()">📥 Export Excel</button>
+<button onclick="exportToPDF()">📄 Export PDF</button>
+<table id="medicineTable">
+  <thead>
+    <tr>
+      <th>Medicine</th><th>Batch No.</th><th>Expiry (DD-MM-YYYY)</th><th>Purchased Qty</th><th>Purchase Date</th>
+      <th>Sold Qty</th><th>Sale Date</th><th>Customer Name</th><th>Address</th><th>Stock Left</th><th>Delete</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+<script>
+const table = document.querySelector("#medicineTable tbody");
+
+function saveData() {
+  localStorage.setItem("medicineData", table.innerHTML);
+}
+
+function loadData() {
+  const data = localStorage.getItem("medicineData");
+  if (data) table.innerHTML = data;
+  updateListeners();
+  updateStock();
+}
+
+function addRow() {
+  const row = table.insertRow();
+  for (let i = 0; i <= 8; i++) {
+    const cell = row.insertCell();
+    cell.contentEditable = true;
+  }
+  const stockCell = row.insertCell(); stockCell.contentEditable = false;
+  const delCell = row.insertCell();
+  const delBtn = document.createElement("button");
+  delBtn.textContent = "🗑"; delBtn.className = "delete";
+  delBtn.onclick = () => { row.remove(); saveData(); };
+  delCell.appendChild(delBtn);
+  updateListeners(); updateStock(); saveData();
+}
+
+function updateListeners() {
+  [...table.rows].forEach(row => {
+    const delBtn = row.cells[10]?.querySelector("button");
+    if (delBtn) delBtn.onclick = () => { row.remove(); saveData(); };
+    for (let i = 0; i <= 8; i++) {
+      const cell = row.cells[i];
+      if (cell) {
+        cell.contentEditable = true;
+        cell.oninput = () => { updateStock(); saveData(); };
+      }
+    }
+  });
+}
+
+function updateStock() {
+  [...table.rows].forEach(row => {
+    const purchased = parseInt(row.cells[3]?.innerText) || 0;
+    const sold = parseInt(row.cells[5]?.innerText) || 0;
+    const stock = Math.max(purchased - sold, 0);
+    row.cells[9].innerText = stock;
+  });
+}
+
+function exportStyledExcel() {
+  const wb = XLSX.utils.book_new();
+  const titleRow = [["SYED MEDICAL STORE - Medicine Tracker"]];
+  const headers = [["Medicine", "Batch No.", "Expiry (DD-MM-YYYY)", "Purchased Qty", "Purchase Date",
+                    "Sold Qty", "Sale Date", "Customer Name", "Address", "Stock Left"]];
+  const dataRows = [...table.rows].map(row => [...row.cells].slice(0, 10).map(c => c.innerText.trim()));
+  const allData = [...titleRow, [], ...headers, ...dataRows];
+
+  const ws = XLSX.utils.aoa_to_sheet(allData);
+  ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 9 } }];
+  ws['!cols'] = Array(10).fill({ wch: 20 });
+
+  XLSX.utils.book_append_sheet(wb, ws, "Tracker");
+  XLSX.writeFile(wb, "SYED_Medical_Tracker.xlsx");
+}
+
+async function exportToPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "landscape" });
+  const rows = [...table.rows].map(row => [...row.cells].slice(0, 10).map(c => c.innerText));
+  const headers = ["Medicine", "Batch No.", "Expiry", "Purchased Qty", "Purchase Date", "Sold Qty", "Sale Date", "Customer Name", "Address", "Stock Left"];
+  doc.autoTable({ head: [headers], body: rows });
+  doc.save("Medicine_Tracker_SYED.pdf");
+}
+
+loadData();
+</script>
+
+</body>
+</html>

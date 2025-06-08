@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYED MEDICAL STORE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+  
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #d4fcdc, #f0fff4, #e3f9ff, #e8fcf4);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #212529;
+    scroll-behavior: smooth;
+  }
+
+  @keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+@keyframes glow {
+  from { text-shadow: 0 0 3px #ff4d4d, 0 0 6px #ff1a1a; }
+  to { text-shadow: 0 0 6px #ff4d4d, 0 0 10px #ff1a1a; }
+}
+  to { text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff1a1a, 0 0 30px #ff1a1a; }
+}
+
+</style>
+
+<style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f4fdf8;
+      color: #212529;
+      scroll-behavior: smooth;
+    }
+    header {
+      background: #198754;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+    header h1 {
+      font-size: 2rem;
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+    }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.15);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      transition: background 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    nav a:hover {
+      background: white;
+      color: #198754;
+    }
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      display: block;
+    }
+    .hero .main-title {
+      font-size: 2.5rem;
+      font-family: 'Montserrat', sans-serif;
+      color: #146c43;
+      margin-bottom: 1rem;
+    }
+    .hero h2 {
+      font-size: 2rem;
+      color: #146c43;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+    .hero .btn {
+      padding: 1rem 2.2rem;
+      font-size: 1.3rem;
+      font-family: 'Montserrat', sans-serif;
+      border: none;
+      margin: 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: bounce 1.5s infinite;
+    }
+    .btn-primary {
+      background: #198754;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #157347;
+      transform: scale(1.08);
+    }
+    .btn-accent {
+      background: #dc3545;
+      color: white;
+    }
+    .btn-accent:hover {
+      background: #bb2d3b;
+      transform: scale(1.08);
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    section {
+      padding: 2rem 1rem;
+    }
+    #order, #upload {
+      display: none;
+    }
+    form input, form textarea {
+      display: block;
+      width: 90%;
+      max-width: 400px;
+      margin: 0.5rem auto;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    form button {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background: #198754;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+    }
+    #invoice-section {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: #fff3cd;
+      color: #856404;
+      margin: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ffeeba;
+    }
+  
+@keyframes glow {
+  from { text-shadow: 0 0 3px #ff4d4d, 0 0 6px #ff1a1a; }
+  to { text-shadow: 0 0 6px #ff4d4d, 0 0 10px #ff1a1a; }
+}
+  to { text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff1a1a, 0 0 30px #ff1a1a; }
+}
+
+</style>
+</head>
+<body>
+
+
+  
+
+<header>
+  <h1>SYED MEDICAL STORE</h1>
+  
+<nav>
+  <a href="store.html" target="_blank">Store</a>
+  <a href="#" onclick="accessInvoice()">Invoice</a>
+  <a href="#" onclick="accessTracker()">Tracker</a>
+  <a href="#contact-section">Contact</a>
+</nav>
+
+</header>
+
+
+
+  <section class="hero">
+    
+
+<div style="text-align:center; margin-bottom: 1rem;">
+  <a href="https://www.ifrc.org/" target="_blank" title="Visit Red Cross"
+     style="text-decoration:none; font-size:5rem; color:#dc3545; animation: glow 1.2s infinite alternate;">
+    ✚
+  </a>
+</div>
+<div class="main-title">SYED MEDICAL STORE</div>
+    <h2>Your Trusted Pharmacy in Ranipora</h2>
+    <p>Fast delivery, genuine medicines, and expert support. Order online or upload your prescription easily.</p>
+    <button class="btn btn-primary" onclick="toggleSection('order')">📦 Order Now</button>
+    <button class="btn btn-accent" onclick="toggleSection('upload')">📤 Upload Prescription</button>
+  </section>
+
+  <section id="order">
+    <h2 style="text-align:center;">Place Your Order</h2>
+    <form onsubmit="sendOrderToWhatsapp(event)">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="text" id="address" placeholder="Your Address" required />
+      <input type="text" id="medicines" placeholder="Medicine Names" required />
+      <input type="tel" id="phone" placeholder="Contact Number" required />
+      <button type="submit">Submit Order</button>
+    </form>
+  </section>
+
+  <section id="upload">
+    <h2 style="text-align:center;">Upload Prescription</h2>
+    <form onsubmit="sendUploadToWhatsapp(event)">
+      <input type="text" id="up_name" placeholder="Your Name" required />
+      <input type="tel" id="up_phone" placeholder="Contact Number" required />
+      <button type="submit">Upload</button>
+    </form>
+  </section>
+
+  <section id="invoice-section">
+    <h2>Invoice Panel (Protected)</h2>
+    <p>This section is protected and only accessible with the correct password.</p>
+  </section>
+
+  
+
+  
+  
+  
+  
+  
+
+<section id="about-us">
+  <h2 style="text-align:center;">💊 About Us</h2>
+  <div id="typewriter-box" style="max-width: 900px; margin: 1rem auto; padding: 1.5rem; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-size: 1.1rem; line-height: 1.6; white-space: pre-wrap;">
+    <p id="typewriter-text"></p>
+  </div>
+</section>
+
+<script>
+  const aboutText = `SYED MEDICAL STORE, located in Ranipora, Anantnag (192201), is your neighborhood pharmacy committed to delivering quality healthcare and personalized service. Established with a mission to make healthcare accessible to everyone, we offer a wide range of medicines, wellness products, and essential health services.
+
+Our store is staffed by certified and knowledgeable professionals who are always ready to assist with prescriptions, medication guidance, and healthcare queries. Whether you need prescription drugs, over-the-counter medicines, or health supplements, we ensure all our products are 100% genuine and sourced from trusted manufacturers.
+
+At SYED MEDICAL STORE, we blend traditional pharmacy values with modern technology. Our website offers features like home delivery, online medicine ordering, and prescription uploads, allowing you to access health services from the comfort of your home. With our AI-powered chatbot, customers can check medicine availability, get instant support, and receive expert suggestions anytime.
+
+We proudly serve hundreds of loyal customers in the Ranipora area and beyond, always prioritizing customer satisfaction, timely delivery, and health-first solutions. Whether it's chronic care, acute treatment, or daily wellness, SYED MEDICAL STORE is your trusted healthcare partner.`;
+
+  const target = document.getElementById("typewriter-text");
+  let index = 0;
+
+  function typeWriter() {
+    if (index < aboutText.length) {
+      target.innerHTML += aboutText.charAt(index);
+      index++;
+      setTimeout(typeWriter, 15);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    setTimeout(typeWriter, 500);
+  });
+</script>
+
+
+
+<section id="achievements">
+    <h2 style="text-align:center;">🏆 Our Achievements</h2>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1.5rem; margin-top:1.5rem; padding: 0 1rem;">
+      <div class="card animate" style="animation-delay: 0.2s;">
+        <img src="https://cdn-icons-png.flaticon.com/512/3500/3500833.png" alt="Happy Customers" class="achieve-img"/>
+        <h3><span class="counter" data-target="10000">0</span>+ Happy Customers</h3>
+        <p>We’ve earned the trust of thousands of satisfied customers through reliable service and care.</p>
+      </div>
+      <div class="card animate" style="animation-delay: 0.4s;">
+        <img src="https://cdn-icons-png.flaticon.com/512/1907/1907541.png" alt="Days of Experience" class="achieve-img"/>
+        <h3><span class="counter" data-target="3652">0</span>+ Days<br><small>120+ Months • <span id="live-hours">87,648+</span> Hours of Experience</small></h3>
+        <p>Years of service converted to measurable impact and care for our community.</p>
+      </div>
+      <div class="card animate" style="animation-delay: 0.6s;">
+        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Recognition" class="achieve-img"/>
+        <h3>Recognized by Health Authorities</h3>
+        <p>Certified and appreciated by local health departments for trusted and timely medical service.</p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .achieve-img {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 1rem;
+    }
+    .card {
+      flex: 1 1 300px;
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .animate {
+      animation: fadeInUp 1s ease forwards;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+@keyframes glow {
+  from { text-shadow: 0 0 3px #ff4d4d, 0 0 6px #ff1a1a; }
+  to { text-shadow: 0 0 6px #ff4d4d, 0 0 10px #ff1a1a; }
+}
+  to { text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff1a1a, 0 0 30px #ff1a1a; }
+}
+
+</style>
+
+
+
+  <style>
+    #achievements .card {
+      flex: 1 1 300px;
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+    #achievements .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+    .achieve-img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    #achievements .card:nth-child(1) { animation-delay: 0.2s; }
+    #achievements .card:nth-child(2) { animation-delay: 0.4s; }
+    #achievements .card:nth-child(3) { animation-delay: 0.6s; }
+  
+@keyframes glow {
+  from { text-shadow: 0 0 3px #ff4d4d, 0 0 6px #ff1a1a; }
+  to { text-shadow: 0 0 6px #ff4d4d, 0 0 10px #ff1a1a; }
+}
+  to { text-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff1a1a, 0 0 30px #ff1a1a; }
+}
+
+</style>
+
+
+<section id="location">
+    <h2 style="text-align:center;">📍 Our Location</h2>
+    <div style="display:flex; justify-content:center; margin-top:1rem;">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.419002126206!2d75.1623546!3d33.7099332!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e203ffcf69f9f9%3A0x643fd6dc476aa4d2!2sRanipora%2C%20Jammu%20and%20Kashmir%20192201!5e0!3m2!1sen!2sin!4v1717742852943!5m2!1sen!2sin"
+        width="90%" height="350" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  const counters = document.querySelectorAll('.counter');
+  const options = { threshold: 0.5 };
+  const animateCounter = (entry) => {
+    const counter = entry.target;
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const speed = 100;
+      const increment = Math.ceil(target / speed);
+      if (count < target) {
+        counter.innerText = count + increment;
+        setTimeout(updateCount, 20);
+      } else {
+        counter.innerText = target.toLocaleString();
+      }
+    };
+    if (entry.isIntersecting && !counter.classList.contains('counted')) {
+      counter.classList.add('counted');
+      updateCount();
+    }
+  };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(animateCounter);
+  }, options);
+  counters.forEach(counter => observer.observe(counter));
+
+  // Live ticking hours updater
+  let liveHours = 87648;
+  const liveElement = document.getElementById('live-hours');
+  function updateLiveHours() {
+    liveHours += 1;
+    if (liveElement) {
+      liveElement.textContent = liveHours.toLocaleString() + '+';
+    }
+  }
+  setInterval(updateLiveHours, 2000);
+</script>
+
+
+<script>
+function sendOrderToWhatsapp(event) {
+  event.preventDefault();
+  const name = document.getElementById("name").value;
+  const address = document.getElementById("address").value;
+  const medicines = document.getElementById("medicines").value;
+  const phone = document.getElementById("phone").value;
+
+  const message = `🛒 *New Medicine Order*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}\n💊 Medicines: ${medicines}`;
+  const url = `https://wa.me/919622783290?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+}
+
+function sendUploadToWhatsapp(event) {
+  event.preventDefault();
+  const name = document.getElementById("up_name").value;
+  const phone = document.getElementById("up_phone").value;
+  const message = `📤 *Prescription Upload Request*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n(Note: User wants to upload a prescription.)`;
+  const url = `https://wa.me/919622783290?text=${encodeURIComponent(message)}`;
+  window.open(url, '_blank');
+}
+
+function toggleSection(sectionId) {
+  document.getElementById("order").style.display = "none";
+  document.getElementById("upload").style.display = "none";
+  document.getElementById(sectionId).style.display = "block";
+}
+</script>
+
+
+
+<section id="contact-section" style="text-align:center; padding:2rem; background:#d1e7dd; color:#0f5132; margin:1rem; border-radius:10px; border:1px solid #badbcc;">
+  <h2>📞 Contact Us</h2>
+  <p><strong>Phone:</strong> +91 96227 83290</p>
+  <p><strong>WhatsApp:</strong> +91 96227 83290</p>
+  <p><strong>Location:</strong> Ranipora, Anantnag, 192201</p>
+</section>
+
+
+
+<script>
+function toggleContact() {
+  const contact = document.getElementById("contact-section");
+  contact.style.display = contact.style.display === "none" ? "block" : "none";
+}
+</script>
+
+
+<script>
+function accessInvoice() {
+  const pass = prompt("Enter password to access invoice:");
+  if (pass === "syed123") {
+    window.location.href = "syed_medical_invoice_fully_editable.html";
+  } else {
+    alert("Incorrect password!");
+  }
+}
+</script>
+
+
+<script>
+function accessTracker() {
+  const pass = prompt("Enter password to access tracker:");
+  if (pass === "syed123") {
+    window.location.href = "tracker_dynamic_excel.html";
+  } else {
+    alert("Incorrect password!");
+  }
+}
+</script>
+</body>
+</html>
